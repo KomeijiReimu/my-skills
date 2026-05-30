@@ -89,6 +89,7 @@ Analyze the diff to determine:
 - **Type**: What kind of change is this?
 - **Scope**: What area/module is affected?
 - **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
+- **Detailed Info**: You can elaborate on the changes made with more text below the description.
 - **Prohibition**: NEVER include testing, validation, or auditing tasks in the commit message (e.g., strictly avoid phrases like "verified type check", "production build", or "passed audit").
 
 ### 4. Execute Commit
@@ -110,7 +111,7 @@ EOF
 
 ## Best Practices
 
-- One logical change per commit. If there are multiple logical changes, you MUST create multiple separate commits accordingly.
+- Ensure commit atomicity: Strictly ONE business or logical change per commit. If your changes span multiple distinct business logic updates, you MUST split them and create multiple separate, atomic commits accordingly.
 - Present tense: "add" not "added"
 - Imperative mood: "fix bug" not "fixes bug"
 - Reference issues: `Closes #123`, `Refs #456`
