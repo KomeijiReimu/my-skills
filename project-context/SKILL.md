@@ -54,6 +54,16 @@ description: |-
 - 若多个候选根目录都合理且会影响写入位置，先向用户确认。
 - 所有 `.agent-context/` 路径均相对项目根目录。
 
+## 版本控制默认规则
+
+- 默认把 `.agent-context/` 视为本地 agent 工作记忆，不纳入 git 管理。
+- 在 git 仓库中创建或维护 `.agent-context/` 时，检查项目根目录 `.gitignore` 是否已忽略 `.agent-context/`。
+- 若 `.agent-context/` 未被忽略，默认最小化创建或更新项目根目录 `.gitignore`，只添加一条：`.agent-context/`。
+- 这是本技能默认流程中唯一允许修改 `.agent-context/` 之外文件的例外；不要借此改动 `.gitignore` 的其他内容、排序或注释。
+- 若用户明确声明希望把 `.agent-context/` 作为团队共享的 agent 接续文档纳入版本控制，则不要添加忽略规则，并在写入前执行敏感信息审查。
+- 若项目不是 git 仓库，不要为了忽略规则创建 `.gitignore`；只在完成汇报中说明未处理版本控制忽略规则。
+- 若 `.agent-context/` 已被 git 跟踪，不要自动移除跟踪；在完成汇报中提示用户如需本地化，应自行执行 `git rm --cached -r .agent-context/` 等版本控制操作。
+
 ## 运行模式选择
 
 加载本技能后按以下顺序判断模式：
@@ -94,10 +104,11 @@ description: |-
 5. 梳理代码结构：模块职责、关键文件、数据流、外部依赖、运行边界。
 6. 从项目文档和 git 历史提取历史脉络；没有依据时写“暂无可核验历史”。
 7. 创建或补齐 `.agent-context/` 全部核心文件。
-8. 按 `references/project-context-template.md` 的结构写入内容。
-9. 在 `risks.md` 记录信息缺口、冲突、待确认事项。
-10. 在 `agent-handoff.md` 写出新 agent 下一步如何继续工作。
-11. 向用户简短汇报创建结果、主要判断和待确认项。
+8. 若项目是 git 仓库，按“版本控制默认规则”检查并最小化更新 `.gitignore`。
+9. 按 `references/project-context-template.md` 的结构写入内容。
+10. 在 `risks.md` 记录信息缺口、冲突、待确认事项。
+11. 在 `agent-handoff.md` 写出新 agent 下一步如何继续工作。
+12. 向用户简短汇报创建结果、主要判断、版本控制处理和待确认项。
 
 ## 更新模式流程
 
@@ -111,7 +122,8 @@ description: |-
 8. 更新 `project-map.md` 或 `architecture.md`：仅当结构、入口、技术栈、数据流发生变化时修改。
 9. 更新 `risks.md`：关闭已解决风险，新增发现的风险和待确认项。
 10. 更新 `agent-handoff.md`：刷新下一步建议和接手注意事项。
-11. 如果本技能执行期间产生长期有价值的项目变更，结束前必须更新 `.agent-context/`；影响后续 agent 判断的修改必须写入 `task-history.md`、`timeline.md`、`current-state.md` 或 `agent-handoff.md`。
+11. 若项目是 git 仓库，按“版本控制默认规则”检查并最小化更新 `.gitignore`。
+12. 如果本技能执行期间产生长期有价值的项目变更，结束前必须更新 `.agent-context/`；影响后续 agent 判断的修改必须写入 `task-history.md`、`timeline.md`、`current-state.md` 或 `agent-handoff.md`。
 
 ## 接手模式流程
 
@@ -143,7 +155,7 @@ description: |-
 - 如果 `.agent-context/` 已被项目另作他用，或其中内容明显不是本技能文档体系，停止写入并询问用户。
 - 如果没有写权限，输出计划和待创建或待修改内容摘要，不要尝试写入项目原有文档目录作为替代。
 - 如果项目已有文档与代码、配置或 `.agent-context/` 冲突，保留原文，记录冲突依据和待确认项。
-- 不写入项目原有文档目录；即使用户另行要求修改项目原有文档，也应作为独立任务处理，本技能流程只修改 `.agent-context/`。
+- 不写入项目原有文档目录；即使用户另行要求修改项目原有文档，也应作为独立任务处理；除“版本控制默认规则”中为忽略 `.agent-context/` 而最小化修改项目根目录 `.gitignore` 外，本技能流程只修改 `.agent-context/`。
 
 ## 写作标准
 
@@ -160,6 +172,7 @@ description: |-
 
 - 可以创建和编辑 `.agent-context/` 内文件。
 - 本技能流程内不编辑项目已有文档；若用户另行要求修改项目文档，应作为独立任务处理，并继续保持 `.agent-context/` 为本技能唯一维护区。
+- 唯一默认例外：可为忽略 `.agent-context/` 最小化创建或更新项目根目录 `.gitignore`，且只能添加 `.agent-context/` 忽略规则。
 - 不要创建本技能之外的 README、CHANGELOG、安装说明等辅助文档。
 - 不要把 `.agent-context/` 当成任务管理器替代品；只记录对 agent 接续有长期价值的信息。
 - 不要记录秘密、令牌、私钥、密码或敏感凭据；只记录配置位置和安全处理方式。
@@ -172,6 +185,7 @@ description: |-
 - 信息来源是否可信，推断是否标注为推断，待确认项是否列出。
 - 是否未泄露秘密、令牌、私钥、密码或敏感凭据。
 - 是否未误改项目原有文档或原有文档目录。
+- git 仓库中 `.agent-context/` 是否已被 `.gitignore` 忽略；如未忽略，是否已按规则只添加 `.agent-context/`。
 - 是否保留有效历史，未把冲突或无依据推断写成事实。
 - `agent-handoff.md` 是否已更新到足以让下个 agent 接手。
 - 若本次有长期价值的项目变更，是否已更新当前状态、时间线、任务历史或接手指南。
@@ -181,6 +195,7 @@ description: |-
 完成后只向用户汇报：
 
 - 创建或更新了哪些 `.agent-context/` 文件。
+- `.agent-context/` 的版本控制处理：已加入 `.gitignore`、已存在忽略规则、用户要求纳入版本控制、非 git 仓库未处理，或已被跟踪需用户自行处理。
 - 本次确认的项目状态和主要变化。
 - 发现的冲突、风险或待确认项。
 - 下次 agent 接手时应先读哪些文件。
