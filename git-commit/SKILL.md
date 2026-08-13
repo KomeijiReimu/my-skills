@@ -4,7 +4,6 @@ description: 'Execute git commit with conventional commit message analysis, inte
 license: MIT
 allowed-tools: Bash
 ---
-
 # Git Commit with Conventional Commits
 
 ## Overview
@@ -23,8 +22,8 @@ Create standardized, semantic git commits using the Conventional Commits specifi
 
 ## Commit Types
 
-| Type       | Purpose                        |
-| ---------- | ------------------------------ |
+| Type         | Purpose                        |
+| ------------ | ------------------------------ |
 | `feat`     | New feature                    |
 | `fix`      | Bug fix                        |
 | `docs`     | Documentation only             |
@@ -90,7 +89,8 @@ Analyze the diff to determine:
 - **Scope**: What area/module is affected?
 - **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
 - **Detailed Info**: You should elaborate on the changes made with more text below the description.
-- **Prohibition**: NEVER include testing, validation, or auditing tasks in the commit message (e.g., strictly avoid phrases like "verified type check", "production build", or "passed audit").
+- **Prohibition** : NEVER include testing, validation, auditing, or code review/remediation references in the commit message (e.g., strictly avoid phrases like "verified type check", "production build", "passed audit", "fixed after audit", or "fixed per review").
+
 
 ### 4. Execute Commit
 
