@@ -9,10 +9,14 @@ description: |-
   - user: "新 agent 接手这个项目，先理解项目" → 读取 .agent-context/，结合项目事实核验并输出接手摘要
   - user: "这个项目很久没碰了，帮我恢复上下文" → 从专属文档、项目文档、代码和 git 历史重建当前项目图景
   - user: "审计项目上下文文档是否过时" → 对照代码、配置、任务和历史记录标记冲突、缺口与待确认项
+  - user: "把当前项目上下文同步到我的项目记忆库" → 仅在用户明确提到记忆库/远程同步时，才配置并推送到独立 Vault
+  - user: "从远程项目记忆库恢复这个项目的上下文" → 仅在用户明确要求拉取时，才从 Vault 写入当前项目 .agent-context/
 ---
 # project-context
 
 维护一套只给 agent 使用的项目上下文文档体系。仅当用户当前请求显式触发本技能时，加载后才默认立即进入接手或创建流程；只有项目根目录不明确、存在写入风险、发现冲突或需要用户确认取舍时才询问。
+
+默认工作方式始终是本地 `.agent-context/`。用户没有明确提到项目记忆库、远程记忆库、Context Vault、同步到远程、从远程拉取/推送时，本技能必须与增加远程能力之前完全相同：不探测全局配置、不克隆 Vault、不联网、不读取 `references/remote-vault.md`。
 
 ## 激活与写入授权
 
@@ -24,6 +28,8 @@ description: |-
 - `.agent-context/` 已存在、此前调用过本技能、当前改动具有长期价值、任务已经完成或文档可能过时，都不能作为自动更新理由。
 - 未获得当前请求授权时，不得创建、编辑、追加、重建或审计 `.agent-context/`，不得为它修改 `.gitignore`，也不得把“更新项目上下文”作为任务收尾步骤。
 - 获得授权后，才按下述模式执行；本次创建或更新的 `.agent-context/README.md` 和 `agent-handoff.md` 必须写入同样的显式触发约束，防止后续 agent 自动维护。
+- 本地上下文授权不等于远程同步授权。创建、更新、接手、审计本地 `.agent-context/` 时，即使本机已有 Vault 配置，也不得自动 pull/push。
+- 只有当前请求明确要求远程项目记忆库或同步时，才允许创建本机配置、克隆 Vault、扫描并复制上下文到记忆库。配置由 agent 自动写入 `~/.config/opencode/project-context/config.yaml`，不要让用户手写。
 
 ## 核心原则
 
@@ -71,7 +77,7 @@ description: |-
 - 默认把 `.agent-context/` 视为本地 agent 工作记忆，不纳入 git 管理。
 - 在 git 仓库中创建或维护 `.agent-context/` 时，检查项目根目录 `.gitignore` 是否已忽略 `.agent-context/`。
 - 若 `.agent-context/` 未被忽略，默认最小化创建或更新项目根目录 `.gitignore`，只添加一条：`.agent-context/`。
-- 这是本技能默认流程中唯一允许修改 `.agent-context/` 之外文件的例外；不要借此改动 `.gitignore` 的其他内容、排序或注释。
+- 这是本地流程中唯一允许修改 `.agent-context/` 之外、且位于当前项目内的文件例外；不要借此改动 `.gitignore` 的其他内容、排序或注释。远程记忆库配置和 Vault 克隆属于本机全局目录，不在当前项目内。
 - 若用户明确声明希望把 `.agent-context/` 作为团队共享的 agent 接续文档纳入版本控制，则不要添加忽略规则，并在写入前执行敏感信息审查。
 - 若项目不是 git 仓库，不要为了忽略规则创建 `.gitignore`；只在完成汇报中说明未处理版本控制忽略规则。
 - 若 `.agent-context/` 已被 git 跟踪，不要自动移除跟踪；在完成汇报中提示用户如需本地化，应自行执行 `git rm --cached -r .agent-context/` 等版本控制操作。
@@ -90,6 +96,26 @@ description: |-
 
 - 有 `.agent-context/README.md`：执行“接手模式 + 轻量审计”，输出当前理解摘要和待更新建议。
 - 没有 `.agent-context/README.md`：执行创建模式，生成专属文档体系。
+- 以上两种默认路径都是纯本地；不要因为存在远程仓库或本机配置而改走远程流程。
+
+## 可选远程记忆库
+
+远程能力是叠加层，不是默认模式。完整协议见 `references/remote-vault.md`，且只有进入远程模式后才读取该文件。
+
+判定顺序：
+
+1. 用户未明确要求远程记忆库 / 同步 / 拉取 / 推送：忽略远程，继续原本地模式。
+2. 用户明确要求远程，但当前请求并未授权操作 `.agent-context/`：仍先遵循“激活与写入授权”；通常远程指令本身已构成授权。
+3. 用户明确要求远程：读取 `references/remote-vault.md`，用 `scripts/vault.py` 自动配置并执行对应子模式。
+4. 远程操作失败或冲突时停止；不要回退成修改项目原有文档，也不要因此改写本地上下文事实。
+
+硬约束：
+
+- 项目内 `.agent-context/` 仍是工作副本，默认继续 gitignore。
+- 全局本地 Vault 是远程仓库的克隆，不嵌套进项目，也不把本机路径写进项目文档。
+- 不要用 symlink。
+- 不要把远程同步写成创建/更新本地上下文的收尾步骤。
+- 冲突停止；推送前扫描秘密。
 
 ## 信息收集顺序
 
@@ -186,6 +212,7 @@ description: |-
 - 可以创建和编辑 `.agent-context/` 内文件。
 - 本技能流程内不编辑项目已有文档；若用户另行要求修改项目文档，应作为独立任务处理，并继续保持 `.agent-context/` 为本技能唯一维护区。
 - 唯一默认例外：可为忽略 `.agent-context/` 最小化创建或更新项目根目录 `.gitignore`，且只能添加 `.agent-context/` 忽略规则。
+- 远程模式的额外例外只作用于本机全局目录和独立 Vault 仓库：`~/.config/opencode/project-context/`、`~/.local/share/opencode/project-context/`、`~/.local/state/opencode/project-context/`，以及 Vault 远程仓库本身。不得借此修改当前项目的 git 历史或其他文档。
 - 不要创建本技能之外的 README、CHANGELOG、安装说明等辅助文档。
 - 不要把 `.agent-context/` 当成任务管理器替代品；只记录对 agent 接续有长期价值的信息。
 - 不要记录秘密、令牌、私钥、密码或敏感凭据；只记录配置位置和安全处理方式。
@@ -203,6 +230,8 @@ description: |-
 - 是否保留有效历史，未把冲突或无依据推断写成事实。
 - `agent-handoff.md` 是否已更新到足以让下个 agent 接手。
 - 用户本次明确要求记录的项目变更，是否已更新到当前状态、时间线、任务历史或接手指南。
+- 若用户未要求远程同步，是否完全没有读取远程协议、创建配置、克隆 Vault 或联网。
+- 若用户要求远程同步，是否使用 `scripts/vault.py`、是否扫描秘密、冲突时是否停止、是否未把本机路径写入项目 `.agent-context/`。
 
 ## 完成汇报
 
@@ -216,10 +245,18 @@ description: |-
 
 不要把完整文档全文贴回对话，除非用户要求。
 
+若本次执行了远程操作，额外汇报：使用的 Vault 远程、项目 ID、Vault 内路径、pull/push/冲突停止、是否自动创建了本机配置。未执行远程操作时不要提及这些项。
+
 ## 模板
 
 创建或重建 `.agent-context/` 时，读取并套用：
 
 ```text
 references/project-context-template.md
+```
+
+仅当用户当前请求明确要求远程项目记忆库或同步时，再读取：
+
+```text
+references/remote-vault.md
 ```
