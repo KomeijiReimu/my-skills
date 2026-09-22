@@ -67,13 +67,14 @@
 - 使用脚本、CLI、批处理程序或外部翻译服务生成译文
 - 翻译参考文献条目
 - 跳过公式或图表标题
+- 把公式写成 Markdown 不能解析的形式。公式必须是 LaTeX，行内用 `$...$`，独立公式用 `$$...$$`。不要裸写 `\frac` 一类命令，不要只用 `\(...\)` 或 `\[...\]`，也不要用文字或 Unicode 代替公式
 - 不说明就删除附录内容
 - 默默掩盖抽取错误或版面缺失
 
-交付前运行校验脚本：
+交付前运行本 skill 自带的校验脚本。脚本路径是「本 skill 根目录」（包含 `SKILL.md` 的目录）下的 `scripts/validate_translation_output.py`。不要写死 `~/.config/opencode/...` 或其他本机绝对路径，也不要假设当前工作目录就是 skill 目录：
 
 ```bash
-python3 ~/.config/opencode/skill/paper-reader/scripts/validate_translation_output.py 论文stem.translation.zh.md
+python3 "<skill 根目录>/scripts/validate_translation_output.py" "论文stem.translation.zh.md"
 ```
 
 如果脚本报错，先修正当前翻译文件，再继续下一篇论文。

@@ -58,13 +58,17 @@
 
 ### 6. 文件完成后运行校验脚本
 
-完成当前翻译文件后，运行：
+完成当前翻译文件后，运行本 skill 自带的校验脚本。先用本次加载时的 skill 根目录（包含 `SKILL.md` 的目录）拼出 `scripts/validate_translation_output.py`，不要写死 `~/.config/opencode/...` 或其他本机绝对路径：
 
 ```bash
-python3 ~/.config/opencode/skill/paper-reader/scripts/validate_translation_output.py 论文stem.translation.zh.md
+python3 "<skill 根目录>/scripts/validate_translation_output.py" "论文stem.translation.zh.md"
 ```
 
 如果脚本报告了"方法概览""实验结论""作者发现""这说明"等可疑表达，或提示缺少章节编号，不要辩解，先回到文件中重写或补齐相关段落。
+
+## 公式
+
+译文里的公式必须是 Markdown 能直接解析的 LaTeX，并用 `$` 包裹。行内用 `$...$`，独立公式用 `$$...$$`。不要裸写 LaTeX 命令，不要只用 `\(...\)` 或 `\[...\]`，也不要把公式改写成中文句子。公式编号可以留在定界符外面。
 
 ## 参考文献处理
 

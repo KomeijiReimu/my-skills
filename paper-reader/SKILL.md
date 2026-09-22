@@ -90,7 +90,7 @@ description: |-
 #### 保留结构
 
 - 保留标题层级、列表、图表标题、脚注、附录标题、算法步骤和公式编号。
-- 公式、符号、变量名、引文编号和引用键默认保持原始记法。
+- 公式按下方「公式」写成 Markdown 可解析的 LaTeX，并用 `$` 或 `$$` 包裹。符号、变量名、引文编号和引用键保持原始记法。
 - 参考文献一栏不用翻译。到达 `References`、`Bibliography` 等参考文献部分时，保留原始条目。
 
 #### 翻译禁止行为
@@ -114,10 +114,10 @@ description: |-
 
 #### 翻译自检
 
-每完成一个翻译文件，运行校验脚本做总结式漂移和章节覆盖检查：
+每完成一个翻译文件，用本 skill 自带的校验脚本做总结式漂移和章节覆盖检查。脚本在本 skill 根目录的 `scripts/validate_translation_output.py`。根目录是本次加载 skill 时给出的、包含本 `SKILL.md` 的目录。用这个根目录拼出脚本路径再执行。不要写死 `~/.config/opencode/...`、`~/.agents/...` 或其他本机绝对路径，也不要假设当前工作目录就是 skill 目录。
 
 ```bash
-python3 ~/.config/opencode/skill/paper-reader/scripts/validate_translation_output.py 论文stem.translation.zh.md
+python3 "<skill 根目录>/scripts/validate_translation_output.py" "论文stem.translation.zh.md"
 ```
 
 只要校验脚本报错，就先修正当前翻译文件，再继续下一篇论文。
@@ -167,6 +167,7 @@ python3 ~/.config/opencode/skill/paper-reader/scripts/validate_translation_outpu
 - 说明每个章节如何支撑论文整体论证。
 - 优先追求完整性，不要为了简洁牺牲覆盖面。
 - 用中文解释所有重要图表的含义和作用。
+- 公式同样遵守下方「公式」：LaTeX，并用 `$` 或 `$$` 包裹。
 
 #### 解析文件头部
 
@@ -192,6 +193,25 @@ python3 ~/.config/opencode/skill/paper-reader/scripts/validate_translation_outpu
 - 文件名使用源文件 stem，保持稳定可追踪。
 - 输出结构要足够清晰，方便用户从结果快速定位回原论文。
 - 在每个生成的 Markdown 文件开头附近注明源文件路径。
+
+### 公式
+
+翻译文件和解析文件里的公式，都必须是 Markdown 能直接解析的 LaTeX，并且用 `$` 包裹：
+
+- 行内公式用一对 `$`：`$a^2 + b^2 = c^2$`
+- 独立成行的公式用一对 `$$`，单独成段：
+
+```markdown
+$$
+a^2 + b^2 = c^2
+$$
+```
+
+- 不要裸写 LaTeX 命令，例如单独出现的 `\frac{1}{2}`。
+- 不要只用 `\(...\)` 或 `\[...\]`。
+- 不要用普通文字、Unicode 拼写或图片代替公式。
+- 公式编号可以留在定界符外面，公式本体必须在 `$` 或 `$$` 里面。
+- 翻译时保留公式的数学内容，不要把公式改写成中文句子来代替。
 
 ## 资源
 
