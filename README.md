@@ -2,9 +2,7 @@
 
 # my-skills
 
-让 Agent 写出信息完整、结构清楚、读者拿来就能用的文档，并约束聊天和执行过程中的废话。
-
-这里有 7 个可独立使用的 skill：1 个输出管控、5 个文档类、1 个 Git 协作。文档类分别面向项目用户、正式文档读者、代码维护者、论文读者和接手项目的 Agent。
+一套面向 AI Agent 的通用 skills，提供可按需安装、独立使用的任务流程与执行约束。
 
 ## 安装
 
@@ -50,7 +48,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 | [`create-readme`](create-readme/SKILL.md) | 创建一个优秀、易读、覆盖全部已核实用户可见功能和关键要点的项目首页。先理解仓库，再按读者任务安排内容。 | `README.md`：用途、完整能力概览、安装与快速上手、典型用法、必要配置和重要限制。 |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | 把笔记、草稿、访谈材料或审阅意见整理成可以直接提交、分享的正式文档。 | 独立可读的报告、方案或完整章节；结构围绕读者问题组织，事实、证据与结论相互对应。 |
 | [`project-documentation-generator`](project-documentation-generator/SKILL.md) | 通读整个项目，把功能如何实现、模块如何协作、代码如何运行解释透彻。 | 系统级技术文档，默认如 `PROJECT_FULL_DOCUMENTATION.md`，包含实现详解、关键代码路径、配置与运行方式、Mermaid 架构和流程图。 |
-| [`paper-reader`](paper-reader/SKILL.md) | 完整精读论文，按需求逐句翻译、详尽解析，或两者都做；多篇论文逐篇处理。 | `论文名.translation.zh.md` 与／或 `论文名.analysis.zh.md`，保留章节、图表、公式和附录；译文逐句对应，解析覆盖方法、实验和复现线索。 |
+| [`paper-reader`](paper-reader/SKILL.md) | 批量精读论文，逐篇完成逐句中文翻译、详尽解析或两者；持续处理全部可读论文，不因篇数多、篇幅长或已完成部分结果而提前收尾。 | 每篇独立生成 `论文名.translation.zh.md` 与／或 `论文名.analysis.zh.md`。译文忠于原文，逐句覆盖，不总结、不删减、不擅自改写；保留章节、图表、公式和附录，解析单独成文。 |
 | [`project-context`](project-context/SKILL.md) | 创建、更新或审计中文项目接续资料，让下一个 Agent 能理解当前状态并继续工作。 | `.agent-context/` 中的项目地图、架构、状态、时间线、决策、风险和接手指南等 10 份核心文档。仅在当前请求明确授权时维护。 |
 
 ### 开发协作
@@ -161,7 +159,12 @@ flowchart LR
     E --> F
 ```
 
-### paper-reader：译文逐句对应，解析把方法与证据讲清楚
+### paper-reader：批量读完，逐句保真
+
+- **整批覆盖**：为全部输入建立清单，逐篇阅读、逐篇生成所选模式的文件，核对每篇的处理状态。
+- **持续处理**：不因论文数量多、内容长或已完成几篇就结束任务。单篇损坏时记录具体原因，继续处理其余可读论文；未完成项如实报告。
+- **忠于原文**：逐句翻译，保留原文论点、限定、数值、术语、公式和附录，不以摘要代替全文，不擅自增删或润色。
+- **翻译与解析分开**：译文对应原文，解释与评价放在独立解析文件中。
 
 按所选模式生成两类独立文件：
 

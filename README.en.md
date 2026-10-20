@@ -2,9 +2,7 @@
 
 # my-skills
 
-Skills for coding agents that produce complete, clearly structured documents readers can use, and keep chat and execution updates focused on the task.
-
-The collection contains 7 independently usable skills: 1 for output control, 5 for documentation, and 1 for Git collaboration. The documentation skills serve project users, formal-document readers, maintainers, paper readers, and agents taking over a project.
+A collection of general-purpose skills for AI agents, providing task workflows and execution rules that can be installed as needed and used independently.
 
 ## Installation
 
@@ -50,7 +48,7 @@ This is an instruction-level simulated hook; the agent must actually load the in
 | [`create-readme`](create-readme/SKILL.md) | Create an excellent, readable project homepage covering every verified user-facing feature and essential usage point. Inspect the repository, then organize around reader tasks. | `README.md`: purpose, a complete feature overview, installation and quick start, typical usage, necessary configuration, and important limitations. |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, interviews, or review material into a formal document ready to submit or share. | A standalone report, proposal, or complete chapter, organized around reader questions with facts, evidence, and conclusions connected. |
 | [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the whole project and explain how features work, modules interact, and code executes. | System-level technical documentation, such as `PROJECT_FULL_DOCUMENTATION.md`, including implementation details, key code paths, configuration and operation, and Mermaid architecture and flow diagrams. |
-| [`paper-reader`](paper-reader/SKILL.md) | Read complete papers and produce sentence-by-sentence Chinese translations, detailed Chinese analyses, or both; process multiple papers individually. | `paper.translation.zh.md` and/or `paper.analysis.zh.md`, preserving sections, figures, formulas, and appendices. Translation follows the original sentences; analysis covers methods, experiments, and reproduction clues. |
+| [`paper-reader`](paper-reader/SKILL.md) | Process papers in batches, completing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both for every readable paper. Continue through the batch rather than stopping because it is large, lengthy, or partly complete. | Separate `paper.translation.zh.md` and/or `paper.analysis.zh.md` files per paper. Translations remain faithful to the source, without summarizing, omitting, or rewriting it; preserve sections, figures, formulas, and appendices. Analysis stays in its own file. |
 | [`project-context`](project-context/SKILL.md) | Create, update, or audit Chinese project handoff material so the next agent can understand the current state and continue. | 10 core files in `.agent-context/`, covering the project map, architecture, state, timeline, decisions, risks, and handoff. Maintenance requires explicit authorization in the current request. |
 
 ### Development collaboration
@@ -161,7 +159,12 @@ flowchart LR
     E --> F
 ```
 
-### paper-reader: faithful translation and detailed analysis
+### paper-reader: complete the batch and preserve the source
+
+- **Cover the whole batch:** Inventory every input, read each paper, produce its requested files, and track its completion status.
+- **Keep going:** Do not stop because there are many papers, the material is long, or several papers are already complete. Record a damaged paper's specific blocker and continue with the remaining readable papers; report unfinished items accurately.
+- **Stay faithful:** Translate sentence by sentence, preserving claims, qualifications, numbers, terminology, formulas, and appendices. Do not replace the full text with a summary, add or omit content, or rewrite the source for style.
+- **Separate translation from analysis:** Keep interpretation and evaluation in the analysis file, with the translation corresponding to the original.
 
 Depending on the selected mode, create separate Chinese translation and analysis files:
 
