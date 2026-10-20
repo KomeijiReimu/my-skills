@@ -37,37 +37,35 @@ After installation, name the skill in a supporting agent, for example:
 
 | Skill | Purpose and workflow |
 | --- | --- |
-| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Apply drafting constraints against invented user positions, irrelevant caveats, evasive judgments, invented jargon, unnecessary process, and promises in place of action. An internal pre-delivery check rejects noncompliant drafts until they are corrected. Covers chat replies, progress updates, and document files. |
+| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Control prose in chat replies, progress updates, and document files. Drafting constraints and a simulated pre-send hook remove straw-man rebuttals, irrelevant caveats, invented jargon, and unnecessary process; noncompliant drafts require correction before delivery. |
 
-This is an instruction-level simulated hook; the agent must actually load the installed skill to use it.
+The agent executes the skill after loading it; instructions simulate the pre-send check.
 
-#### Document prose improvements
+#### Dedicated document-writing improvements
 
-The following 4 human-facing documentation skills explicitly address awkward agent-generated prose. Their drafting and delivery checks require:
+The following 4 documentation skills include prose constraints for clear, complete human-facing documents:
 
-- **Concrete facts and actions.** Explain what happens, how to use it, and why it matters in language readers understand. Remove invented jargon such as “evidence gates” and “semantic closure.” Retain established project and academic terms, explaining them when useful.
-- **No baseless negations or straw-man rebuttals.** Do not invent a reader misconception just to correct it with “this is not…” or “but that does not prove…”.
-- **Standalone final prose.** Remove chat replies, revision notes, self-praise, irrelevant caveats, and pointless transitions. Preserve real limitations, risks, and evidence gaps.
-- **Keep the substance.** READMEs cover features and usage, technical documents explain implementation, and translations preserve the original information. Cleaning the prose must not turn complete documents into summaries or change a paper's meaning.
-- **Read back actual files before delivery.** Fix problems in the document and recheck them instead of stopping at a suggested edit.
-- **Renderable formulas.** Write Markdown math in LaTeX: `$...$` inline and standalone `$$...$$` blocks for display equations. Check symbols and delimiters rather than leaving formulas as code or bare commands.
-
-Each documentation skill includes these requirements and can be used independently.
+- **Concrete language.** Clear subjects, actions, and facts replace invented jargon such as “evidence gates” and “semantic closure.” Established technical terms receive explanations when useful.
+- **Less defensive prose.** Remove baseless negations, straw-man rebuttals, irrelevant caveats, and empty self-praise while retaining limitations and risks that affect understanding or use.
+- **Standalone final text.** Organize around reader questions and remove chat replies, revision notes, and accounts of the writing process.
+- **Complete content.** READMEs cover features and usage, technical documents explain implementation, and translations preserve the original information and meaning.
+- **Corrections in the document.** Deliver the revised text, with identified problems addressed in the file.
+- **Renderable formulas.** Markdown math uses LaTeX: `$...$` inline and standalone `$$...$$` blocks for display equations.
 
 ### Human-facing document creation and editing
 
 | Skill | When to use it | Deliverable |
 | --- | --- | --- |
-| [`create-readme`](create-readme/SKILL.md) | Create an excellent, readable project homepage covering every verified user-facing feature and essential usage point. Inspect the repository, then organize around reader tasks. | `README.md`: purpose, a complete feature overview, installation and quick start, typical usage, necessary configuration, and important limitations. |
-| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, interviews, or review material into a formal document ready to submit or share. | A standalone report, proposal, or complete chapter, organized around reader questions with facts, evidence, and conclusions connected. |
-| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the whole project and explain how features work, modules interact, and code executes. | System-level technical documentation, such as `PROJECT_FULL_DOCUMENTATION.md`, including implementation details, key code paths, configuration and operation, and Mermaid architecture and flow diagrams. |
-| [`paper-reader`](paper-reader/SKILL.md) | Process papers in batches, completing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both for every readable paper. Continue through the batch rather than stopping because it is large, lengthy, or partly complete. | Separate `paper.translation.zh.md` and/or `paper.analysis.zh.md` files per paper. Translations remain faithful to the source, without summarizing, omitting, or rewriting it; preserve sections, figures, formulas, and appendices. Analysis stays in its own file. |
+| [`create-readme`](create-readme/SKILL.md) | Create or rewrite a project homepage covering every verified user-facing feature and essential usage point. | `README.md`: purpose, features, installation, quick start, typical usage, configuration, and important limitations. |
+| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, or review material into a document ready to submit or share. | A standalone report, proposal, or complete chapter connecting facts, evidence, and conclusions. |
+| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the repository and explain feature implementation, module interactions, and key code paths. | System-level technical documentation with implementation details, runtime configuration, and Mermaid diagrams; a default filename is `PROJECT_FULL_DOCUMENTATION.md`. |
+| [`paper-reader`](paper-reader/SKILL.md) | Process batches of readable papers through completion, producing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both. | Separate translation and/or analysis files per paper; faithful translations cover sections, figures, formulas, and appendices. |
 
 ### Long-running work and context management
 
 | Skill | When to use it | Output and usage boundaries |
 | --- | --- | --- |
-| [`project-context`](project-context/SKILL.md) | Maintain Chinese working context for agents continuing long-running projects. Supports creation, updates, takeover, rebuilding, and auditing to preserve continuity across sessions. | 10 core context files in `.agent-context/`, covering the project map, architecture, state, timeline, decisions, risks, and handoff, for agents to read, verify, and continue work. Maintenance requires explicit authorization in the current request. |
+| [`project-context`](project-context/SKILL.md) | Maintain Chinese working context for subsequent agents on long-running projects, with creation, updates, takeover, rebuilding, and auditing. | 10 core context files in `.agent-context/` for continuity across sessions; maintenance requires explicit user authorization in the current request. |
 
 ### Development collaboration
 
@@ -75,11 +73,11 @@ Each documentation skill includes these requirements and can be used independent
 | --- | --- |
 | [`git-commit`](git-commit/SKILL.md) | Inspect the actual diff, stage logical changes, generate a Conventional Commits subject and body, and commit. |
 
-## What the output looks like
+## Structure and content examples
 
-The following fictional checksum tool, import service, and paper excerpts illustrate structure and prose. Actual sections, commands, and conclusions come from the task's source material.
+The following examples use a fictional checksum tool, import service, and paper excerpts to illustrate each skill's content structure and writing style.
 
-### create-readme: understand the project and start using it
+### create-readme: a project homepage with complete feature and usage coverage
 
 Organize the README around adoption and usage, with all actual features represented. A CLI project might use:
 
@@ -132,7 +130,7 @@ Objective and conclusion
 >
 > The exported file must contain every selected record. After a network interruption, completed records remain complete, and a retry processes only the remaining records.
 
-### project-documentation-generator: implementation detail for maintainers
+### project-documentation-generator: system-level implementation documentation
 
 Produce one repository-wide technical document linking each feature to its entry point, core modules, data structures, processing steps, and output.
 
@@ -166,9 +164,9 @@ flowchart LR
 
 ### paper-reader: complete the batch and preserve the source
 
-- **Cover the whole batch:** Inventory every input, read each paper, produce its requested files, and track its completion status.
-- **Keep going:** Do not stop because there are many papers, the material is long, or several papers are already complete. Record a damaged paper's specific blocker and continue with the remaining readable papers; report unfinished items accurately.
-- **Stay faithful:** Translate sentence by sentence, preserving claims, qualifications, numbers, terminology, formulas, and appendices. Do not replace the full text with a summary, add or omit content, or rewrite the source for style.
+- **Cover the whole batch:** Track each paper's selected mode, output files, and processing status, completing the requested work paper by paper.
+- **Keep going:** Continue until all readable papers are processed, without stopping because of batch size, length, or partial completion. Record damaged papers and continue with the rest.
+- **Stay faithful:** Translate the full text sentence by sentence, preserving claims, qualifications, numbers, terminology, formulas, and appendices, without replacing it with a summary or adding, omitting, or rewriting content.
 - **Separate translation from analysis:** Keep interpretation and evaluation in the analysis file, with the translation corresponding to the original.
 
 Depending on the selected mode, create separate Chinese translation and analysis files:
