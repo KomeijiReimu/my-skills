@@ -41,25 +41,9 @@ After installation, name the skill in a supporting agent, for example:
 
 This is an instruction-level simulated hook; the agent must actually load the installed skill to use it.
 
-### Document creation and editing
+#### Document prose improvements
 
-| Skill | When to use it | Deliverable |
-| --- | --- | --- |
-| [`create-readme`](create-readme/SKILL.md) | Create an excellent, readable project homepage covering every verified user-facing feature and essential usage point. Inspect the repository, then organize around reader tasks. | `README.md`: purpose, a complete feature overview, installation and quick start, typical usage, necessary configuration, and important limitations. |
-| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, interviews, or review material into a formal document ready to submit or share. | A standalone report, proposal, or complete chapter, organized around reader questions with facts, evidence, and conclusions connected. |
-| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the whole project and explain how features work, modules interact, and code executes. | System-level technical documentation, such as `PROJECT_FULL_DOCUMENTATION.md`, including implementation details, key code paths, configuration and operation, and Mermaid architecture and flow diagrams. |
-| [`paper-reader`](paper-reader/SKILL.md) | Process papers in batches, completing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both for every readable paper. Continue through the batch rather than stopping because it is large, lengthy, or partly complete. | Separate `paper.translation.zh.md` and/or `paper.analysis.zh.md` files per paper. Translations remain faithful to the source, without summarizing, omitting, or rewriting it; preserve sections, figures, formulas, and appendices. Analysis stays in its own file. |
-| [`project-context`](project-context/SKILL.md) | Create, update, or audit Chinese project handoff material so the next agent can understand the current state and continue. | 10 core files in `.agent-context/`, covering the project map, architecture, state, timeline, decisions, risks, and handoff. Maintenance requires explicit authorization in the current request. |
-
-### Development collaboration
-
-| Skill | Purpose |
-| --- | --- |
-| [`git-commit`](git-commit/SKILL.md) | Inspect the actual diff, stage logical changes, generate a Conventional Commits subject and body, and commit. |
-
-## Shared documentation requirements
-
-All 5 documentation skills explicitly address awkward agent-generated prose. Their drafting and delivery checks require:
+The following 4 human-facing documentation skills explicitly address awkward agent-generated prose. Their drafting and delivery checks require:
 
 - **Concrete facts and actions.** Explain what happens, how to use it, and why it matters in language readers understand. Remove invented jargon such as “evidence gates” and “semantic closure.” Retain established project and academic terms, explaining them when useful.
 - **No baseless negations or straw-man rebuttals.** Do not invent a reader misconception just to correct it with “this is not…” or “but that does not prove…”.
@@ -69,6 +53,27 @@ All 5 documentation skills explicitly address awkward agent-generated prose. The
 - **Renderable formulas.** Write Markdown math in LaTeX: `$...$` inline and standalone `$$...$$` blocks for display equations. Check symbols and delimiters rather than leaving formulas as code or bare commands.
 
 Each documentation skill includes these requirements and can be used independently.
+
+### Human-facing document creation and editing
+
+| Skill | When to use it | Deliverable |
+| --- | --- | --- |
+| [`create-readme`](create-readme/SKILL.md) | Create an excellent, readable project homepage covering every verified user-facing feature and essential usage point. Inspect the repository, then organize around reader tasks. | `README.md`: purpose, a complete feature overview, installation and quick start, typical usage, necessary configuration, and important limitations. |
+| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, interviews, or review material into a formal document ready to submit or share. | A standalone report, proposal, or complete chapter, organized around reader questions with facts, evidence, and conclusions connected. |
+| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the whole project and explain how features work, modules interact, and code executes. | System-level technical documentation, such as `PROJECT_FULL_DOCUMENTATION.md`, including implementation details, key code paths, configuration and operation, and Mermaid architecture and flow diagrams. |
+| [`paper-reader`](paper-reader/SKILL.md) | Process papers in batches, completing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both for every readable paper. Continue through the batch rather than stopping because it is large, lengthy, or partly complete. | Separate `paper.translation.zh.md` and/or `paper.analysis.zh.md` files per paper. Translations remain faithful to the source, without summarizing, omitting, or rewriting it; preserve sections, figures, formulas, and appendices. Analysis stays in its own file. |
+
+### Long-running work and context management
+
+| Skill | When to use it | Output and usage boundaries |
+| --- | --- | --- |
+| [`project-context`](project-context/SKILL.md) | Maintain Chinese working context for agents continuing long-running projects. Supports creation, updates, takeover, rebuilding, and auditing to preserve continuity across sessions. | 10 core context files in `.agent-context/`, covering the project map, architecture, state, timeline, decisions, risks, and handoff, for agents to read, verify, and continue work. Maintenance requires explicit authorization in the current request. |
+
+### Development collaboration
+
+| Skill | Purpose |
+| --- | --- |
+| [`git-commit`](git-commit/SKILL.md) | Inspect the actual diff, stage logical changes, generate a Conventional Commits subject and body, and commit. |
 
 ## What the output looks like
 
@@ -189,9 +194,9 @@ $$
 
 > Here, $n$ is the sample count, $f_{\theta}(x_i)$ is the prediction, and $y_i$ is the observation. Errors are squared before averaging, so larger errors contribute more to the loss.
 
-### project-context: find the entry points, current state, and next action
+### project-context: long-term context and continuity for agents
 
-Keep a fixed set of Chinese project documents, separating current facts, historical changes, and continuation steps:
+Maintain a fixed set of Chinese project context files for subsequent agents, separating current facts, historical changes, and next actions so work can be read, verified, and continued across sessions:
 
 ```text
 .agent-context/

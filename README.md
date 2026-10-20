@@ -41,25 +41,9 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 这是指令级的模拟 hook，安装后需由 Agent 实际加载使用。
 
-### 文档创作与整理
+#### 文档输出的文风优化
 
-| Skill | 适合什么任务 | 交付内容 |
-| --- | --- | --- |
-| [`create-readme`](create-readme/SKILL.md) | 创建一个优秀、易读、覆盖全部已核实用户可见功能和关键要点的项目首页。先理解仓库，再按读者任务安排内容。 | `README.md`：用途、完整能力概览、安装与快速上手、典型用法、必要配置和重要限制。 |
-| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | 把笔记、草稿、访谈材料或审阅意见整理成可以直接提交、分享的正式文档。 | 独立可读的报告、方案或完整章节；结构围绕读者问题组织，事实、证据与结论相互对应。 |
-| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | 通读整个项目，把功能如何实现、模块如何协作、代码如何运行解释透彻。 | 系统级技术文档，默认如 `PROJECT_FULL_DOCUMENTATION.md`，包含实现详解、关键代码路径、配置与运行方式、Mermaid 架构和流程图。 |
-| [`paper-reader`](paper-reader/SKILL.md) | 批量精读论文，逐篇完成逐句中文翻译、详尽解析或两者；持续处理全部可读论文，不因篇数多、篇幅长或已完成部分结果而提前收尾。 | 每篇独立生成 `论文名.translation.zh.md` 与／或 `论文名.analysis.zh.md`。译文忠于原文，逐句覆盖，不总结、不删减、不擅自改写；保留章节、图表、公式和附录，解析单独成文。 |
-| [`project-context`](project-context/SKILL.md) | 创建、更新或审计中文项目接续资料，让下一个 Agent 能理解当前状态并继续工作。 | `.agent-context/` 中的项目地图、架构、状态、时间线、决策、风险和接手指南等 10 份核心文档。仅在当前请求明确授权时维护。 |
-
-### 开发协作
-
-| Skill | 用途 |
-| --- | --- |
-| [`git-commit`](git-commit/SKILL.md) | 分析真实 diff，按逻辑变更组织暂存，生成 Conventional Commits 格式的标题与正文并提交。 |
-
-## 文档类 skill 的共同要求
-
-上面 5 个文档类 skill 都针对 Agent 常见的生硬文风做了专门约束，写作和交付检查包括：
+下列 4 个面向人类读者的文档类 skill 都针对 Agent 常见的生硬文风做了专门约束，写作和交付检查包括：
 
 - **说清事实与动作。** 用读者能理解的语言说明做什么、怎么用、为什么；清除“证据门禁”“语义闭环”等自造黑话。项目和学科已有术语按需要解释。
 - **清除无源否定和假想反驳。** 不替读者编造误解，再写一段“这不是……”“但不能说明……”来纠正。
@@ -69,6 +53,27 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 - **公式可渲染。** Markdown 公式使用 LaTeX，行内用 `$...$`，独立公式用单独成段的 `$$...$$`；检查符号与定界符，避免把公式写成代码或裸命令。
 
 这些要求已分别写入文档类 skill，可独立使用。
+
+### 面向人类读者的文档创作与整理
+
+| Skill | 适合什么任务 | 交付内容 |
+| --- | --- | --- |
+| [`create-readme`](create-readme/SKILL.md) | 创建一个优秀、易读、覆盖全部已核实用户可见功能和关键要点的项目首页。先理解仓库，再按读者任务安排内容。 | `README.md`：用途、完整能力概览、安装与快速上手、典型用法、必要配置和重要限制。 |
+| [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | 把笔记、草稿、访谈材料或审阅意见整理成可以直接提交、分享的正式文档。 | 独立可读的报告、方案或完整章节；结构围绕读者问题组织，事实、证据与结论相互对应。 |
+| [`project-documentation-generator`](project-documentation-generator/SKILL.md) | 通读整个项目，把功能如何实现、模块如何协作、代码如何运行解释透彻。 | 系统级技术文档，默认如 `PROJECT_FULL_DOCUMENTATION.md`，包含实现详解、关键代码路径、配置与运行方式、Mermaid 架构和流程图。 |
+| [`paper-reader`](paper-reader/SKILL.md) | 批量精读论文，逐篇完成逐句中文翻译、详尽解析或两者；持续处理全部可读论文，不因篇数多、篇幅长或已完成部分结果而提前收尾。 | 每篇独立生成 `论文名.translation.zh.md` 与／或 `论文名.analysis.zh.md`。译文忠于原文，逐句覆盖，不总结、不删减、不擅自改写；保留章节、图表、公式和附录，解析单独成文。 |
+
+### 长期工作与上下文管理
+
+| Skill | 适合什么任务 | 产出与使用边界 |
+| --- | --- | --- |
+| [`project-context`](project-context/SKILL.md) | 为长期项目维护面向后续 Agent 的中文工作上下文，支持创建、更新、接手、重建与审计，帮助跨会话延续工作。 | `.agent-context/` 中的项目地图、架构、状态、时间线、决策、风险和接手指南等 10 份核心上下文资料，供 Agent 读取、核验并继续工作。仅在当前请求明确授权时维护。 |
+
+### 开发协作
+
+| Skill | 用途 |
+| --- | --- |
+| [`git-commit`](git-commit/SKILL.md) | 分析真实 diff，按逻辑变更组织暂存，生成 Conventional Commits 格式的标题与正文并提交。 |
 
 ## 看看会产出什么
 
@@ -189,9 +194,9 @@ $$
 
 > 其中，$n$ 为样本数，$f_{\theta}(x_i)$ 为模型预测，$y_i$ 为观测值。每个样本的误差先平方再求平均，误差较大的样本对损失的贡献更大。
 
-### project-context：接手时能找到入口、状态和下一步
+### project-context：面向 Agent 的长期上下文与工作接续
 
-维护固定的中文项目资料体系，将当前事实、历史变化与后续行动分别存放：
+为后续 Agent 维护固定的中文项目上下文体系，将当前事实、历史变化与后续行动分别存放，支持跨会话读取、核验和接续工作：
 
 ```text
 .agent-context/
