@@ -2,7 +2,7 @@
 
 # my-skills
 
-A collection of reusable skills for coding agents. The skills cover README writing, final-document editing, Git commits, paper reading, project context maintenance, and system-level technical documentation.
+A collection of reusable skills for coding agents. The skills cover output quality, README writing, final-document editing, Git commits, paper reading, project context maintenance, and system-level technical documentation.
 
 ## Installation
 
@@ -31,6 +31,7 @@ Source: [`KomeijiReimu/my-skills`](https://github.com/KomeijiReimu/my-skills)
 
 | Skill | Purpose |
 | --- | --- |
+| [`output-quality`](output-quality/SKILL.md) | Apply drafting constraints and a pre-delivery self-check to remove irrelevant caveats, straw-man rebuttals, and unnecessary process. |
 | [`create-readme`](create-readme/SKILL.md) | Create, rewrite, and review user-facing README files. |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, or review material into submission-ready documents. |
 | [`git-commit`](git-commit/SKILL.md) | Create Git commits using the Conventional Commits format. |
@@ -43,6 +44,7 @@ Source: [`KomeijiReimu/my-skills`](https://github.com/KomeijiReimu/my-skills)
 Each skill has its own directory at the repository root, with `SKILL.md` as its entry file:
 
 ```text
+output-quality/SKILL.md
 create-readme/SKILL.md
 deliverable-document-writer/SKILL.md
 git-commit/SKILL.md

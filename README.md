@@ -2,7 +2,7 @@
 
 # my-skills
 
-一套可安装到编码 Agent 的通用 skills，帮助 Agent 完成 README 写作、最终文档整理、Git 提交、论文阅读、项目上下文维护和系统级技术文档生成。
+一套可安装到编码 Agent 的通用 skills，涵盖输出质量约束、README 写作、最终文档整理、Git 提交、论文阅读、项目上下文维护和系统级技术文档生成。
 
 ## 安装
 
@@ -31,6 +31,7 @@ bunx skills add KomeijiReimu/my-skills --skill create-readme
 
 | Skill | 用途 |
 | --- | --- |
+| [`output-quality`](output-quality/SKILL.md) | 用生成前约束与交付前自检，清除无关免责、虚构反驳和流程膨胀。 |
 | [`create-readme`](create-readme/SKILL.md) | 创建、重写和审校面向最终用户的 README。 |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | 将笔记、草稿或审阅材料整理成可提交的最终文档。 |
 | [`git-commit`](git-commit/SKILL.md) | 按 Conventional Commits 规范创建 Git 提交。 |
@@ -43,6 +44,7 @@ bunx skills add KomeijiReimu/my-skills --skill create-readme
 每个 skill 位于仓库根目录下的独立目录中，入口文件统一为 `SKILL.md`：
 
 ```text
+output-quality/SKILL.md
 create-readme/SKILL.md
 deliverable-document-writer/SKILL.md
 git-commit/SKILL.md
