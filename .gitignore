@@ -2,3 +2,6 @@
 .slim/
 .opencode/
 .tokpulse/
+.tokpulse-writer-locks/
+.tokpulse-migrate-*/
+.opencode/oc-tps/
