@@ -196,6 +196,8 @@ $$
 
 Maintain a fixed set of Chinese project context files for subsequent agents, separating current facts, historical changes, and next actions so work can be read, verified, and continued across sessions:
 
+After reading or creating a project's context with user authorization, follow-up questions in the same session such as “Do you remember?” or “Why did we decide that?” trigger a targeted, read-only document lookup with source references. Memory tools supplement that lookup. Document maintenance and remote synchronization still require explicit authorization in the current request.
+
 ```text
 .agent-context/
 ├── README.md             # Entry point and maintenance rules
