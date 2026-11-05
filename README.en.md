@@ -37,9 +37,7 @@ After installation, name the skill in a supporting agent, for example:
 
 | Skill | Purpose and workflow |
 | --- | --- |
-| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Control prose in chat replies, progress updates, and document files. Drafting constraints and a simulated pre-send hook remove straw-man rebuttals, irrelevant caveats, invented jargon, and unnecessary process; noncompliant drafts require correction before delivery. |
-
-The agent executes the skill after loading it; instructions simulate the pre-send check.
+| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Remove unprompted negations, straw-man rebuttals, contrived contrasts, obvious conditions, and filler from chat replies, progress updates, and documents. State facts, conclusions, and actions directly. |
 
 #### Dedicated document-writing improvements
 
@@ -222,7 +220,7 @@ After reading or creating a project's context with user authorization, follow-up
 
 ### Output control and Git collaboration examples
 
-`fkgpt-output-quality` checks whether a sentence helps with the task and is supported by evidence. If a release is confirmed for Friday:
+`fkgpt-output-quality` removes unnecessary negations, contrasts, and hypothetical conditions appended to an answer. If a release is confirmed for Friday:
 
 | Candidate reply | Corrected reply |
 | --- | --- |

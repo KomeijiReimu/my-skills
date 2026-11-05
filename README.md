@@ -37,9 +37,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 | Skill | 用途与执行方式 |
 | --- | --- |
-| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | 管控聊天回复、进度消息和文件文档的表达。通过生成前约束与模拟发送前 hook，清除虚构反驳、无关免责、黑话和流程膨胀；违规候选稿须修改后再交付。 |
-
-该 skill 由 Agent 加载后执行，hook 通过指令模拟发送前自检。
+| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | 清理聊天回复、进度消息和文件文档中的无源否定、假想反驳、无端转折、常识性条件和套话，直接给出事实、结论和做法。 |
 
 #### 文档写作的专门优化
 
@@ -222,7 +220,7 @@ $$
 
 ### 输出管控与 Git 协作示例
 
-`fkgpt-output-quality` 按任务与证据判断一句话是否有用。例如已确认发布时间为周五：
+`fkgpt-output-quality` 删除回答后多余的否定、转折和假想条件。例如已确认发布时间为周五：
 
 | 候选答复 | 修正后 |
 | --- | --- |
