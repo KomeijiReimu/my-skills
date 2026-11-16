@@ -29,7 +29,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 安装后，在支持 skills 的 Agent 中点名使用，例如：
 
-> 用 create-readme 为这个项目重写 README，覆盖全部用户可见功能、安装步骤和典型用法。
+> 用 create-readme 为这个项目重写 README，介绍主要功能、安装步骤和典型用法。
 
 ## 按任务选择
 
@@ -54,7 +54,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 | Skill | 适合什么任务 | 交付内容 |
 | --- | --- | --- |
-| [`create-readme`](create-readme/SKILL.md) | 创建或重写项目首页，覆盖全部已核实的用户可见功能与使用要点。 | `README.md`：用途、功能、安装、快速上手、典型用法、配置和重要限制。 |
+| [`create-readme`](create-readme/SKILL.md) | 创建或重写项目首页，介绍已核实的主要功能与使用要点。 | `README.md`：用途、功能、安装、快速上手、典型用法、配置和重要限制。 |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | 将笔记、草稿或审阅材料整理成可直接提交、分享的成稿。 | 独立可读的报告、方案或完整章节，连接事实、证据与结论。 |
 | [`project-documentation-generator`](project-documentation-generator/SKILL.md) | 通读仓库，解释功能实现、模块协作与核心代码路径。 | 系统级技术文档，包含实现详解、运行配置和 Mermaid 图，默认文件名如 `PROJECT_FULL_DOCUMENTATION.md`。 |
 | [`paper-reader`](paper-reader/SKILL.md) | 批量精读论文，持续完成整批可读论文的逐句中文翻译、详尽解析或两者。 | 每篇独立生成译文与／或解析；译文忠于原文，覆盖章节、图表、公式和附录。 |
@@ -70,6 +70,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 | Skill | 用途 |
 | --- | --- |
 | [`git-commit`](git-commit/SKILL.md) | 分析真实 diff，按逻辑变更组织暂存，生成 Conventional Commits 格式的标题与正文并提交。 |
+| [`write-pr-description`](write-pr-description/SKILL.md) | 根据分支变更与仓库模板撰写或更新 PR 正文，说明变更目的、行为影响、设计取舍，并提供审阅重点和与变更相关的验证依据。 |
 
 ## 结构与内容示例
 
@@ -77,7 +78,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 ### create-readme：功能与使用说明完整的项目首页
 
-围绕用户的采用与使用过程组织 README，逐项展示真实功能。例如一个命令行工具：
+围绕用户的采用与使用过程组织 README，选择完成主要任务所需的功能说明。例如一个命令行工具：
 
 ```text
 项目名称与一句话用途
@@ -218,6 +219,16 @@ $$
 >
 > **继续工作**：从 `src/import/result-view.ts` 接入行号与失败原因，补充缺列和空字段场景的测试。
 
+### write-pr-description：面向审阅者的 PR 正文
+
+从 diff、提交和项目资料提取审阅所需的信息，按仓库模板组织正文。验证内容围绕变更行为、回归测试覆盖和可查证结果展开；复杂改动可附阅读顺序与具体待决问题。
+
+**正文片段：**
+
+> CSV 导入现在会拒绝缺少必填列的行，并在错误信息中返回行号和缺失字段，方便用户定位并修正数据。
+>
+> 回归测试覆盖缺列行的错误信息，断言行号与字段名均包含在结果中。
+
 ### 输出管控与 Git 协作示例
 
 `fkgpt-output-quality` 删除回答后多余的否定、转折和假想条件。例如已确认发布时间为周五：
@@ -246,6 +257,7 @@ git-commit/SKILL.md
 paper-reader/SKILL.md
 project-context/SKILL.md
 project-documentation-generator/SKILL.md
+write-pr-description/SKILL.md
 ```
 
 ## 适用 Agent

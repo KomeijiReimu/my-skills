@@ -29,7 +29,7 @@ Source: [`KomeijiReimu/my-skills`](https://github.com/KomeijiReimu/my-skills)
 
 After installation, name the skill in a supporting agent, for example:
 
-> Use create-readme to rewrite this project's README, covering every user-facing feature, installation, and typical usage.
+> Use create-readme to rewrite this project's README, describing core capabilities, installation, and typical usage.
 
 ## Choose by task
 
@@ -54,7 +54,7 @@ The following 4 documentation skills include prose constraints for clear, comple
 
 | Skill | When to use it | Deliverable |
 | --- | --- | --- |
-| [`create-readme`](create-readme/SKILL.md) | Create or rewrite a project homepage covering every verified user-facing feature and essential usage point. | `README.md`: purpose, features, installation, quick start, typical usage, configuration, and important limitations. |
+| [`create-readme`](create-readme/SKILL.md) | Create or rewrite a project homepage describing verified core capabilities and essential usage. | `README.md`: purpose, features, installation, quick start, typical usage, configuration, and important limitations. |
 | [`deliverable-document-writer`](deliverable-document-writer/SKILL.md) | Turn notes, drafts, or review material into a document ready to submit or share. | A standalone report, proposal, or complete chapter connecting facts, evidence, and conclusions. |
 | [`project-documentation-generator`](project-documentation-generator/SKILL.md) | Read the repository and explain feature implementation, module interactions, and key code paths. | System-level technical documentation with implementation details, runtime configuration, and Mermaid diagrams; a default filename is `PROJECT_FULL_DOCUMENTATION.md`. |
 | [`paper-reader`](paper-reader/SKILL.md) | Process batches of readable papers through completion, producing sentence-by-sentence Chinese translations, detailed Chinese analyses, or both. | Separate translation and/or analysis files per paper; faithful translations cover sections, figures, formulas, and appendices. |
@@ -70,6 +70,7 @@ The following 4 documentation skills include prose constraints for clear, comple
 | Skill | Purpose |
 | --- | --- |
 | [`git-commit`](git-commit/SKILL.md) | Inspect the actual diff, stage logical changes, generate a Conventional Commits subject and body, and commit. |
+| [`write-pr-description`](write-pr-description/SKILL.md) | Draft or update PR bodies from branch changes and repository templates, explaining purpose, behavior changes, design decisions, review focus, and relevant verification evidence. |
 
 ## Structure and content examples
 
@@ -77,7 +78,7 @@ The following examples use a fictional checksum tool, import service, and paper 
 
 ### create-readme: a project homepage with complete feature and usage coverage
 
-Organize the README around adoption and usage, with all actual features represented. A CLI project might use:
+Organize the README around adoption and usage, selecting the feature details readers need for their main tasks. A CLI project might use:
 
 ```text
 Project name and one-sentence purpose
@@ -218,6 +219,16 @@ After reading or creating a project's context with user authorization, follow-up
 >
 > **Continue here:** Wire row numbers and failure reasons into `src/import/result-view.ts`, then add tests for missing columns and empty fields.
 
+### write-pr-description: PR bodies for reviewers
+
+Extract review-relevant facts from the diff, commits, and project materials, then organize them using the repository's template. Validation content describes changed behavior, regression coverage, and inspectable results. Complex changes can include a reading order and specific open questions.
+
+**Example excerpt:**
+
+> CSV import now rejects rows with missing required columns and returns the row number and missing field names so users can locate and correct the data.
+>
+> The regression test asserts that the error for a row with missing columns includes both the row number and field names.
+
 ### Output control and Git collaboration examples
 
 `fkgpt-output-quality` removes unnecessary negations, contrasts, and hypothetical conditions appended to an answer. If a release is confirmed for Friday:
@@ -246,6 +257,7 @@ git-commit/SKILL.md
 paper-reader/SKILL.md
 project-context/SKILL.md
 project-documentation-generator/SKILL.md
+write-pr-description/SKILL.md
 ```
 
 ## Compatible agents
