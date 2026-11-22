@@ -37,7 +37,7 @@ After installation, name the skill in a supporting agent, for example:
 
 | Skill | Purpose and workflow |
 | --- | --- |
-| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Remove unprompted negations, straw-man rebuttals, contrived contrasts, obvious conditions, and filler from chat replies, progress updates, and documents. State facts, conclusions, and actions directly. |
+| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | Before calling a result “unverified,” run the checks you can and report what you find. Remove straw-man rebuttals, irrelevant conditions, and filler from replies, progress updates, and documents. |
 
 #### Dedicated document-writing improvements
 

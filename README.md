@@ -37,7 +37,7 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 | Skill | 用途与执行方式 |
 | --- | --- |
-| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | 清理聊天回复、进度消息和文件文档中的无源否定、假想反驳、无端转折、常识性条件和套话，直接给出事实、结论和做法。 |
+| [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | 遇到“尚未验证”等表述时先补做能完成的查证，直接给出结果；清理聊天回复、进度消息和文件文档中的假想反驳、题外条件和套话。 |
 
 #### 文档写作的专门优化
 
