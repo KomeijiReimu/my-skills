@@ -88,9 +88,8 @@ Analyze the diff to determine:
 - **Type**: What kind of change is this?
 - **Scope**: What area/module is affected?
 - **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
-- **Detailed Info**: You should elaborate on the changes made with more text below the description.
+- **Detailed Info**: You **had better** elaborate on the changes made with more text below the description.
 - **Prohibition** : NEVER include testing, validation, auditing, or code review/remediation references in the commit message (e.g., strictly avoid phrases like "verified type check", "production build", "passed audit", "fixed after audit", or "fixed per review").
-
 
 ### 4. Execute Commit
 
