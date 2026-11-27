@@ -35,6 +35,8 @@ npx skills add KomeijiReimu/my-skills --skill fkgpt-output-quality
 
 ### 输出管控
 
+建议只为 OpenAI 的 GPT / ChatGPT 系列模型启用 `fkgpt-output-quality` 的自动调用。技能描述中的模型限制由模型自行遵循；使用其他模型时，建议按需点名调用。
+
 | Skill | 用途与执行方式 |
 | --- | --- |
 | [`fkgpt-output-quality`](fkgpt-output-quality/SKILL.md) | 遇到“尚未验证”等表述时先补做能完成的查证，直接给出结果；清理聊天回复、进度消息和文件文档中的假想反驳、题外条件和套话。 |
